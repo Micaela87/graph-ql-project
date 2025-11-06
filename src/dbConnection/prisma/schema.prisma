@@ -1,0 +1,80 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+  engineType      = "client"
+}
+
+datasource db {
+  provider = "sqlserver"
+  url      = env("DB_URL")
+}
+
+model EFMigrationsHistory {
+  MigrationId    String @id(map: "PK___EFMigrationsHistory") @db.NVarChar(150)
+  ProductVersion String @db.NVarChar(32)
+
+  @@map("__EFMigrationsHistory")
+}
+
+model Items {
+  Uuid        String        @id(map: "PK_Items") @default(dbgenerated("newid()"), map: "DF_Items_Uuid") @db.NVarChar(450)
+  Name        String        @db.VarChar(255)
+  Description String        @db.NText
+  Price       Decimal       @default(-12.0, map: "DF__Items__Price__4BAC3F29") @db.Decimal(18, 2)
+  IsDeleted   Int           @db.TinyInt
+  IsActive    Int           @db.TinyInt
+  CreatedAt   DateTime
+  UpdatedAt   DateTime?
+  ActivatedAt DateTime?
+  DeletedAt   DateTime?
+  ItemsOrders ItemsOrders[]
+}
+
+model ItemsOrders {
+  Uuid            String    @id(map: "PK_ItemsOrders") @default("newid()", map: "DF_ItemsOrders_Uuid") @db.NVarChar(450)
+  OrderUuid       String?   @db.NVarChar(450)
+  ItemUuid        String?   @db.NVarChar(450)
+  ItemQty         Int       @db.TinyInt
+  ItemPricePerQty Decimal   @db.Decimal(18, 2)
+  CreatedAt       DateTime  @db.DateTime
+  UpdatedAt       DateTime? @db.DateTime
+  Items           Items?    @relation(fields: [ItemUuid], references: [Uuid], onDelete: NoAction, onUpdate: NoAction, map: "FK_ItemsOrders_Items")
+  Orders          Orders?   @relation(fields: [OrderUuid], references: [Uuid], onDelete: NoAction, onUpdate: NoAction, map: "FK_ItemsOrders_Orders")
+}
+
+model Orders {
+  Uuid        String        @id(map: "PK_Orders") @default("newid()", map: "DF_Orders_Uuid") @db.NVarChar(450)
+  UserUuid    String?       @db.NVarChar(450)
+  Total       Decimal       @db.Decimal(18, 2)
+  CreatedAt   DateTime      @default(now(), map: "DF_Orders_CreatedAt") @db.DateTime
+  UpdatedAt   DateTime?     @default(now(), map: "DF_Orders_UpdatedAt") @db.DateTime
+  ItemsOrders ItemsOrders[]
+  Users       Users?        @relation(fields: [UserUuid], references: [Uuid], onDelete: NoAction, onUpdate: NoAction, map: "FK_Orders_Users")
+}
+
+model sysdiagrams {
+  name         String @db.NVarChar(128)
+  principal_id Int
+  diagram_id   Int    @id(map: "PK__sysdiagr__C2B05B61ED3472B8") @default(autoincrement())
+  version      Int?
+  definition   Bytes?
+
+  @@unique([principal_id, name], map: "UK_principal_name")
+}
+
+model Users {
+  Uuid        String    @id(map: "PK_Users") @db.NVarChar(450)
+  FirstName   String    @db.VarChar(255)
+  LastName    String    @db.VarChar(255)
+  Email       String    @db.NVarChar(450)
+  Password    String    @db.NVarChar(Max)
+  IsActive    Int
+  IsDeleted   Int
+  CreatedAt   DateTime
+  ActivatedAt DateTime?
+  UpdatedAt   DateTime?
+  DeletedAt   DateTime?
+  Orders      Orders[]
+
+  @@unique([Email, Uuid], map: "IX_Users_Email_Uuid")
+}

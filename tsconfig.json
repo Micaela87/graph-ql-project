@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "target": "ESnext",
+    "module": "NodeNext",
+    "moduleResolution": "nodenext",
+    "allowJs": true,
+    "noEmit": false,
+    "strict": true,
+    //"esModuleInterop": false,
+    "allowSyntheticDefaultImports": false,
+    "lib": [ "esnext", "dom" ],
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "exactOptionalPropertyTypes": true,
+    "verbatimModuleSyntax": false,
+    "outDir": "dist",
+    "rootDir": "./",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
+  },
+
+  "include": [
+    "server.ts",
+    "src/**/*"
+  ],
+  "exclude": ["node_modules/**"],
+}
