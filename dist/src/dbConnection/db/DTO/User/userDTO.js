@@ -9,78 +9,69 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Item = void 0;
+exports.User = void 0;
 const type_graphql_1 = require("type-graphql");
 const scalarTypesConfig_1 = require("../../../../types/graphqlScalarTypes/scalarTypesConfig");
-const library_1 = require("@prisma/client/runtime/library");
 const moment = require("moment");
-let Item = class Item {
+let User = class User {
     Uuid;
-    Name;
-    Description;
-    Price;
-    IsDeleted = 0;
+    FirstName;
+    LastName;
+    Email; // Has unique constraint
+    Password;
     IsActive = 0;
+    IsDeleted = 0; // Logical deletion
+    // DateTime to register oper
     CreatedAt = moment().format();
-    UpdatedAt;
     ActivatedAt;
-    DeletedAt;
+    UpdatedAt;
+    DeletedAt; // Only for logical deletion
 };
-exports.Item = Item;
+exports.User = User;
 __decorate([
     (0, type_graphql_1.Field)((_type) => String),
     __metadata("design:type", String)
-], Item.prototype, "Uuid", void 0);
+], User.prototype, "Uuid", void 0);
 __decorate([
     (0, type_graphql_1.Field)((_type) => String),
     __metadata("design:type", String)
-], Item.prototype, "Name", void 0);
+], User.prototype, "FirstName", void 0);
 __decorate([
     (0, type_graphql_1.Field)((_type) => String),
-    __metadata("design:type", Object)
-], Item.prototype, "Description", void 0);
+    __metadata("design:type", String)
+], User.prototype, "LastName", void 0);
 __decorate([
-    (0, type_graphql_1.Field)((_type) => scalarTypesConfig_1.decimal),
-    __metadata("design:type", library_1.Decimal)
-], Item.prototype, "Price", void 0);
+    (0, type_graphql_1.Field)((_type) => String),
+    __metadata("design:type", String)
+], User.prototype, "Email", void 0);
+__decorate([
+    (0, type_graphql_1.Field)((_type) => String),
+    __metadata("design:type", String)
+], User.prototype, "Password", void 0);
 __decorate([
     (0, type_graphql_1.Field)((_type) => type_graphql_1.Int),
     __metadata("design:type", Number)
-], Item.prototype, "IsDeleted", void 0);
+], User.prototype, "IsActive", void 0);
 __decorate([
     (0, type_graphql_1.Field)((_type) => type_graphql_1.Int),
     __metadata("design:type", Number)
-], Item.prototype, "IsActive", void 0);
+], User.prototype, "IsDeleted", void 0);
 __decorate([
     (0, type_graphql_1.Field)((_type) => scalarTypesConfig_1.date),
     __metadata("design:type", Date)
-], Item.prototype, "CreatedAt", void 0);
+], User.prototype, "CreatedAt", void 0);
 __decorate([
     (0, type_graphql_1.Field)((_type) => scalarTypesConfig_1.date),
-    __metadata("design:type", Object)
-], Item.prototype, "UpdatedAt", void 0);
+    __metadata("design:type", Date)
+], User.prototype, "ActivatedAt", void 0);
 __decorate([
     (0, type_graphql_1.Field)((_type) => scalarTypesConfig_1.date),
-    __metadata("design:type", Object)
-], Item.prototype, "ActivatedAt", void 0);
+    __metadata("design:type", Date)
+], User.prototype, "UpdatedAt", void 0);
 __decorate([
     (0, type_graphql_1.Field)((_type) => scalarTypesConfig_1.date),
-    __metadata("design:type", Object)
-], Item.prototype, "DeletedAt", void 0);
-exports.Item = Item = __decorate([
+    __metadata("design:type", Date)
+], User.prototype, "DeletedAt", void 0);
+exports.User = User = __decorate([
     (0, type_graphql_1.ObjectType)()
-], Item);
-/*buildSchema(`
-  type Item {
-      Uuid: Uuid!
-      Name: String!
-      Description: String
-      Price: Float!
-      IsDeleted: Int!
-      IsActive: Int!
-      CreatedAt: Date!
-      UpdatedAt: Date
-      ActivatedAt: Date
-      DeletedAt: Date
-  }
-`);*/ 
+], User);

@@ -63,7 +63,7 @@ model sysdiagrams {
 }
 
 model Users {
-  Uuid        String    @id(map: "PK_Users") @db.NVarChar(450)
+  Uuid        String    @id(map: "PK_Users") @default(dbgenerated("newid()"), map: "DF_Users_Uuid") @db.NVarChar(450)
   FirstName   String    @db.VarChar(255)
   LastName    String    @db.VarChar(255)
   Email       String    @db.NVarChar(450)

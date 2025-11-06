@@ -6,7 +6,7 @@ export interface UpdateItemDTO {
     IsDeleted: number;
     IsActive: number;
     CreatedAt: Date;
-    UpdatedAt?: Date | null;
+    UpdatedAt: Date;
     ActivatedAt?: Date | null;
     DeletedAt?: Date | null;
 }

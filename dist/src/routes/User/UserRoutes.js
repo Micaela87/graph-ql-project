@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const ItemSchema_1 = require("../../schemas/Item/ItemSchema");
+const UserController_1 = require("../../controllers/User/UserController");
 const express = require('express');
 const router = express.Router();
-const { ItemController } = require("../../controllers/Item/ItemController");
 const { RuruServerController } = require("../../controllers/ruruServer/RuruServerController");
 const ruruServer = new RuruServerController();
-const instance = new ItemController();
+const instance = new UserController_1.UserController();
 const schema = new ItemSchema_1.ItemSchema().schema;
 router.param('uuid', (req, res, next, uuid) => {
     try {
@@ -17,9 +17,9 @@ router.param('uuid', (req, res, next, uuid) => {
         next(err);
     }
 });
-router.get("/:uuid", instance.getItemByUuid);
-router.get("/", instance.getItems);
-router.post("/create", instance.createItem);
-router.put("/:uuid/update", instance.updateItem);
-router.delete("/:uuid/delete/logical", instance.deleteItem);
+router.get("/:uuid", instance.getUserByUuid);
+router.get("/", instance.getUsers);
+router.post("/create", instance.createUser);
+router.put("/:uuid/update", instance.updateUser);
+/*router.delete("/:uuid/delete/logical", instance.deleteUser);*/
 module.exports = router;

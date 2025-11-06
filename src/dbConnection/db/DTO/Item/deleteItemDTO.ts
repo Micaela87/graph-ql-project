@@ -8,7 +8,7 @@ export interface DeleteItemDTO {
     IsDeleted: number;
     IsActive: number;
     CreatedAt: Date;
-    UpdatedAt?: Date | null;
-    ActivatedAt?: Date | null;
-    DeletedAt?: Date | null;
+    UpdatedAt: null;
+    ActivatedAt: null;
+    DeletedAt: Date;
 }

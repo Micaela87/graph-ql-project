@@ -1,6 +1,7 @@
 import { Field, Int, ObjectType } from "type-graphql";
 import { date, decimal } from "../../../../types/graphqlScalarTypes/scalarTypesConfig";
 import { Decimal } from "@prisma/client/runtime/library";
+const moment = require("moment");
 
 export interface ItemDTO {
     Uuid: string;
@@ -31,13 +32,13 @@ export class Item {
     Price!: Decimal;
 
     @Field((_type) => Int!)
-    IsDeleted!: number;
+    IsDeleted: number = 0;
 
     @Field((_type) => Int!)
-    IsActive!: number;
+    IsActive: number = 0;
 
     @Field((_type) => date!)
-    CreatedAt!: Date;
+    CreatedAt: Date = moment().format();
 
     @Field((_type) => date)
     UpdatedAt?: Date | null;

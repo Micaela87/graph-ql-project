@@ -1,7 +1,7 @@
 generator client {
-  provider   = "prisma-client-js"
-  engineType = "client"
+  provider        = "prisma-client-js"
   previewFeatures = ["driverAdapters"]
+  engineType      = "client"
 }
 
 datasource db {
@@ -17,7 +17,7 @@ model EFMigrationsHistory {
 }
 
 model Items {
-  Uuid        String        @id(map: "PK_Items") @default(dbgenerated("NEWID()"), map: "DF_Items_Uuid") @db.UniqueIdentifier
+  Uuid        String        @id(map: "PK_Items") @default(dbgenerated("newid()"), map: "DF_Items_Uuid") @db.NVarChar(450)
   Name        String        @db.VarChar(255)
   Description String        @db.NText
   Price       Decimal       @default(-12.0, map: "DF__Items__Price__4BAC3F29") @db.Decimal(18, 2)
@@ -63,7 +63,7 @@ model sysdiagrams {
 }
 
 model Users {
-  Uuid        String    @id(map: "PK_Users") @db.NVarChar(450)
+  Uuid        String    @id(map: "PK_Users") @default(dbgenerated("newid()"), map: "DF_Users_Uuid") @db.NVarChar(450)
   FirstName   String    @db.VarChar(255)
   LastName    String    @db.VarChar(255)
   Email       String    @db.NVarChar(450)
