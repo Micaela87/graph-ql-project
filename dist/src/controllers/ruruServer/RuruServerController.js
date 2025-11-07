@@ -19,8 +19,10 @@ const schema = new ItemSchema_1.ItemSchema().schema;
 let RuruServerController = class RuruServerController {
     constructor() { }
     async mountServer(req, res, next) {
-        res.type("json");
-        res.end((0, server_1.ruruHTML)({ endpoint: '/ruru/server' }));
+        console.log(req.body);
+        res.end((0, server_1.ruruHTML)({
+            endpoint: '/test/schema'
+        }));
         return;
     }
 };

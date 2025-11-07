@@ -6,14 +6,14 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.itemOutput = exports.ItemPayload = void 0;
+exports.userOutput = exports.UserPayload = void 0;
 const graphql_1 = require("graphql");
 const decorators_1 = require("../../utils/decorators/decorators");
 const scalarTypesConfig_1 = require("../graphqlScalarTypes/scalarTypesConfig");
-let ItemPayload = class ItemPayload {
-    createItemPayload() {
+let UserPayload = class UserPayload {
+    createUserPayload() {
         return new graphql_1.GraphQLInputObjectType({
-            name: 'createItemPayload',
+            name: 'createUserPayload',
             fields: {
                 Name: {
                     type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString)
@@ -45,46 +45,9 @@ let ItemPayload = class ItemPayload {
             }
         });
     }
-    updateItemPayload() {
+    updateUserPayload() {
         return new graphql_1.GraphQLInputObjectType({
-            name: 'updateItemPayload',
-            fields: {
-                Uuid: {
-                    type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString)
-                },
-                Name: {
-                    type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString)
-                },
-                Description: {
-                    type: graphql_1.GraphQLString || ''
-                },
-                Price: {
-                    type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLFloat)
-                },
-                IsDeleted: {
-                    type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLInt)
-                },
-                IsActive: {
-                    type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLInt)
-                },
-                CreatedAt: {
-                    type: new graphql_1.GraphQLNonNull(scalarTypesConfig_1.date)
-                },
-                UpdatedAt: {
-                    type: scalarTypesConfig_1.date
-                },
-                ActivatedAt: {
-                    type: scalarTypesConfig_1.date
-                },
-                DeletedAt: {
-                    type: scalarTypesConfig_1.date
-                }
-            }
-        });
-    }
-    deleteItemPayload() {
-        return new graphql_1.GraphQLInputObjectType({
-            name: 'deleteItemPayload',
+            name: 'updateUserPayload',
             fields: {
                 Uuid: {
                     type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString)
@@ -119,35 +82,76 @@ let ItemPayload = class ItemPayload {
             }
         });
     }
-    createItemOutput() {
+    deleteUserPayload() {
+        return new graphql_1.GraphQLInputObjectType({
+            name: 'deleteUserPayload',
+            fields: {
+                Uuid: {
+                    type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString)
+                },
+                Name: {
+                    type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString)
+                },
+                Description: {
+                    type: graphql_1.GraphQLString || ''
+                },
+                Price: {
+                    type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLFloat)
+                },
+                IsDeleted: {
+                    type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLInt)
+                },
+                IsActive: {
+                    type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLInt)
+                },
+                CreatedAt: {
+                    type: new graphql_1.GraphQLNonNull(scalarTypesConfig_1.date)
+                },
+                UpdatedAt: {
+                    type: scalarTypesConfig_1.date
+                },
+                ActivatedAt: {
+                    type: scalarTypesConfig_1.date
+                },
+                DeletedAt: {
+                    type: scalarTypesConfig_1.date
+                }
+            }
+        });
+    }
+    createUserOutput() {
         return new graphql_1.GraphQLObjectType({
             name: "UserDTO",
             fields: {
                 Uuid: {
                     type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString)
                 },
-                Name: {
+                FirstName: {
+                    type: graphql_1.GraphQLString
+                },
+                LastName: {
+                    type: graphql_1.GraphQLString
+                },
+                Email: {
                     type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString)
-                },
-                Description: {
-                    type: graphql_1.GraphQLString || ''
-                },
-                Price: {
-                    type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLFloat)
-                },
-                IsDeleted: {
-                    type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLInt)
+                }, // Has unique constraint
+                Password: {
+                    type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString)
                 },
                 IsActive: {
                     type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLInt)
                 },
+                IsDeleted: {
+                    type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLInt)
+                }, // Logical deletion
+                // DateTime to register operations on table
                 CreatedAt: {
-                    type: new graphql_1.GraphQLNonNull(scalarTypesConfig_1.date)
-                },
-                UpdatedAt: {
                     type: scalarTypesConfig_1.date
                 },
                 ActivatedAt: {
+                    type: scalarTypesConfig_1.date
+                },
+                UpdatedAt: {
                     type: scalarTypesConfig_1.date
                 },
                 DeletedAt: {
@@ -157,8 +161,8 @@ let ItemPayload = class ItemPayload {
         });
     }
 };
-exports.ItemPayload = ItemPayload;
-exports.ItemPayload = ItemPayload = __decorate([
+exports.UserPayload = UserPayload;
+exports.UserPayload = UserPayload = __decorate([
     (0, decorators_1.Controller)("")
-], ItemPayload);
-exports.itemOutput = new ItemPayload().createItemOutput();
+], UserPayload);
+exports.userOutput = new UserPayload().createUserOutput();

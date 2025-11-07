@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const graphql_http_1 = require("graphql-http");
+const UserSchema_1 = require("../../schemas/User/UserSchema");
+const express = require('express');
+const app = express();
+const { RuruServerController } = require("../../controllers/ruruServer/RuruServerController");
+const ruruServer = new RuruServerController();
+const schema = new UserSchema_1.UserSchema().schema;
+app.post("/schema/users", (0, graphql_http_1.createHandler)({ schema: schema }));
+app.get("/", ruruServer.mountServer);
+module.exports = app;

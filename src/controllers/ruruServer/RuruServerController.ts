@@ -14,8 +14,10 @@ export class RuruServerController {
 
     @Get("/")
     public async mountServer(req: Request, res: Response, next: NextFunction): Promise<HTMLDocument | undefined> {
-        res.type("json");
-        res.end(ruruHTML({ endpoint: '/ruru/server' }));
+        console.log(req.body);
+        res.end(ruruHTML({
+            endpoint: '/test/schema'
+        }));
         return;
     }
 }

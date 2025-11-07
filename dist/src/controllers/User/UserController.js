@@ -12,13 +12,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserController = void 0;
 const decorators_1 = require("../../utils/decorators/decorators");
 const graphql_1 = require("graphql");
-const ItemSchema_1 = require("../../schemas/Item/ItemSchema");
+const UserSchema_1 = require("../../schemas/User/UserSchema");
 const UserResolver_1 = require("../../schemas/User/UserResolver");
-const schema = new ItemSchema_1.ItemSchema().schema;
+const schema = new UserSchema_1.UserSchema().schema;
 const resolvers = new UserResolver_1.UserResolver();
 let UserController = class UserController {
+    //https://stackoverflow.com/questions/40390025/why-wont-graphql-on-node-js-call-my-resolve-method
+    // per documentazione sull'uso del campo resolve negli oggetti graphql
     async getUserByUuid(req, res, next) {
-        return await (0, graphql_1.graphql)(schema, req.params.uuid, resolvers.getUserByUuid(req, res, next));
+        await (0, graphql_1.graphql)(schema, `{ getUserByUuid(Uuid: "${req.params.uuid}") }`)
+            .then(console.log.bind(console));
+        return await (0, graphql_1.graphql)(schema, `{ getUserByUuid(Uuid: "${req.params.uuid}") }` /*, resolvers.getUserByUuid(req, res, next)*/);
     }
     async getUsers(req, res, next) {
         return await (0, graphql_1.graphql)(schema, req.params.uuid, resolvers.getUsers(req, res, next));
@@ -28,6 +32,9 @@ let UserController = class UserController {
     }
     async updateUser(req, res, next) {
         return await (0, graphql_1.graphql)(schema, req.params.uuid, resolvers.updateUser(req, res, next));
+    }
+    async deleteUser(req, res, next) {
+        return await (0, graphql_1.graphql)(schema, req.params.uuid, resolvers.deleteUser(req, res, next));
     }
 };
 exports.UserController = UserController;
@@ -50,11 +57,17 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "createUser", null);
 __decorate([
-    (0, decorators_1.Put)("/update"),
+    (0, decorators_1.Put)("/:uuid/update"),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, Object, Function]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "updateUser", null);
+__decorate([
+    (0, decorators_1.Put)("/:uuid/delete/logical"),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object, Function]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "deleteUser", null);
 exports.UserController = UserController = __decorate([
     (0, decorators_1.Controller)("/")
 ], UserController);

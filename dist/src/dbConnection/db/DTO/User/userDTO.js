@@ -73,5 +73,5 @@ __decorate([
     __metadata("design:type", Date)
 ], User.prototype, "DeletedAt", void 0);
 exports.User = User = __decorate([
-    (0, type_graphql_1.ObjectType)()
+    (0, type_graphql_1.ObjectType)("User")
 ], User);

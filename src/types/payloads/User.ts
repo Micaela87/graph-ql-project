@@ -3,13 +3,13 @@ import { Controller } from "../../utils/decorators/decorators";
 import { date } from "../graphqlScalarTypes/scalarTypesConfig";
 
 @Controller("")
-export class ItemPayload {
+export class UserPayload {
     
-    public createItemPayload(): GraphQLInputObjectType {
+    public createUserPayload(): GraphQLInputObjectType {
         
         return new GraphQLInputObjectType({
             
-            name: 'createItemPayload',
+            name: 'createUserPayload',
             
             fields: {
                 Name: {
@@ -44,11 +44,11 @@ export class ItemPayload {
 
     }
 
-    public updateItemPayload(): GraphQLInputObjectType {
+    public updateUserPayload(): GraphQLInputObjectType {
 
         return new GraphQLInputObjectType({
             
-            name: 'updateItemPayload',
+            name: 'updateUserPayload',
             
             fields: {
                 Uuid: {
@@ -85,11 +85,11 @@ export class ItemPayload {
         });
     }
 
-    public deleteItemPayload(): GraphQLInputObjectType {
+    public deleteUserPayload(): GraphQLInputObjectType {
 
         return new GraphQLInputObjectType({
             
-            name: 'deleteItemPayload',
+            name: 'deleteUserPayload',
             
             fields: {
                 Uuid: {
@@ -127,7 +127,7 @@ export class ItemPayload {
 
     }
 
-    public createItemOutput(): GraphQLOutputType {
+    public createUserOutput(): GraphQLOutputType {
 
         return new GraphQLObjectType({
 
@@ -137,28 +137,33 @@ export class ItemPayload {
                 Uuid: {
                     type: new GraphQLNonNull(GraphQLString)
                 },
-                Name: {
+                FirstName: {
+                    type: GraphQLString
+                },
+                LastName: {
+                    type: GraphQLString
+                },
+                Email: {
                     type: new GraphQLNonNull(GraphQLString)
-                },
-                Description: {
-                    type: GraphQLString || ''
-                },
-                Price: {
-                    type: new GraphQLNonNull(GraphQLFloat)
-                },
-                IsDeleted: {
-                    type: new GraphQLNonNull(GraphQLInt)
+                }, // Has unique constraint
+                Password:  {
+                    type: new GraphQLNonNull(GraphQLString)
                 },
                 IsActive: {
                     type: new GraphQLNonNull(GraphQLInt)
                 },
+                IsDeleted: {
+                    type: new GraphQLNonNull(GraphQLInt)
+                }, // Logical deletion
+
+                // DateTime to register operations on table
                 CreatedAt: {
-                    type: new GraphQLNonNull(date)
-                },
-                UpdatedAt: {
                     type: date
                 },
                 ActivatedAt: {
+                    type: date
+                },
+                UpdatedAt: {
                     type: date
                 },
                 DeletedAt: {
@@ -170,4 +175,4 @@ export class ItemPayload {
     
 }
 
-export const itemOutput = new ItemPayload().createItemOutput(); 
+export const userOutput = new UserPayload().createUserOutput(); 

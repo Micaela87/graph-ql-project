@@ -13,6 +13,7 @@ exports.UserResolver = void 0;
 const type_graphql_1 = require("type-graphql");
 const userDTO_1 = require("../../dbConnection/db/DTO/User/userDTO");
 const prisma_1 = require("../../dbConnection/prisma/prisma");
+const functionUtils_1 = require("../../utils/functions/functionUtils");
 let UserResolver = class UserResolver {
     async getUserByUuid(req, res, next) {
         try {
@@ -105,6 +106,34 @@ let UserResolver = class UserResolver {
             next(err);
         }
     }
+    async deleteUser(req, res, next) {
+        try {
+            const uuid = req.params.uuid;
+            const recordExistst = await prisma_1.prisma.users.findUnique({
+                where: {
+                    Uuid: uuid
+                }
+            });
+            if (!recordExistst) {
+                throw new Error(undefined, { cause: 700 });
+            }
+            const payload = (0, functionUtils_1.payloadValidation)(req.body, "delete");
+            const result = await prisma_1.prisma.users.update({
+                where: {
+                    Uuid: uuid
+                },
+                data: payload
+            });
+            if (!result) {
+                throw new Error(undefined, { cause: 700 });
+            }
+            res.json({ data: result });
+            return;
+        }
+        catch (err) {
+            next(err);
+        }
+    }
 };
 exports.UserResolver = UserResolver;
 __decorate([
@@ -131,6 +160,12 @@ __decorate([
     __metadata("design:paramtypes", [Object, Object, Function]),
     __metadata("design:returntype", Promise)
 ], UserResolver.prototype, "updateUser", null);
+__decorate([
+    (0, type_graphql_1.Mutation)(_returns => userDTO_1.User),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object, Function]),
+    __metadata("design:returntype", Promise)
+], UserResolver.prototype, "deleteUser", null);
 exports.UserResolver = UserResolver = __decorate([
     (0, type_graphql_1.Resolver)(_return => userDTO_1.User)
 ], UserResolver);

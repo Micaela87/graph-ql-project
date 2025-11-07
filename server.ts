@@ -1,4 +1,3 @@
-import { createHandler } from "graphql-http";
 import { errorHandler } from "./src/middlewares/middlewares";
 
 const express = require('express');
@@ -8,6 +7,7 @@ const path = require('path');
 const logger = require('morgan')
 const itemRouter = require("./src/routes/Item/ItemRoutes");
 const userRouter = require("./src/routes/User/UserRoutes");
+const graphqlUserHandler = require("./src/routes/User/GraphQLUserRouting");
 
 const app = express();
 
@@ -20,11 +20,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/graphql/items', itemRouter);
 app.use('/graphql/users', userRouter);
+app.use('/graphql/users', graphqlUserHandler);
+//app.use("/test", graphqlUserHandler)
 
 app.use(errorHandler);
- 
+
 // Start the server at port
 const PORT = process.env.SERVER_PORT || 3000;
+
+    
 
 app.listen(PORT, 
     () => console.log(`Running a GraphQL API server at http://localhost:${PORT}/graphql`));

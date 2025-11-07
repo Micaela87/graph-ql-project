@@ -21,7 +21,7 @@ export interface UserDTO {
     //public List<Order> Orders { get; set; } = [];
 }
 
-@ObjectType()
+@ObjectType("User")
 export class User {
 
     @Field((_type) => String!)

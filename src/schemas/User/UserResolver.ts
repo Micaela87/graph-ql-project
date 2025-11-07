@@ -4,6 +4,8 @@ import { User, UserDTO } from "../../dbConnection/db/DTO/User/userDTO";
 import { prisma } from "../../dbConnection/prisma/prisma";
 import { CreateUserDTO } from "../../dbConnection/db/DTO/User/createUserDTO";
 import { UpdateUserDTO } from "../../dbConnection/db/DTO/User/updateUserDTO";
+import { DeleteUserDTO } from "../../dbConnection/db/DTO/User/deleteUserDTO";
+import { payloadValidation } from "../../utils/functions/functionUtils";
 
 @Resolver(_return => User)
 export class UserResolver {
@@ -118,6 +120,44 @@ export class UserResolver {
             }
 
             const payload = req.body;
+
+            const result = await prisma.users.update({
+                where: {
+                    Uuid: uuid
+                },
+                data: payload
+            });
+
+            if (!result) {
+                throw new Error(undefined, { cause: 700 });
+            }
+
+            res.json({ data: result });
+            return;
+
+        } catch(err) {
+            next(err);
+        }
+    }
+
+    @Mutation(_returns => User)
+    public async deleteUser(req: Request<Request["params"], DeleteUserDTO>, res: Response, next: NextFunction): Promise<UserDTO | undefined> {
+        
+        try {
+
+            const uuid = req.params.uuid;
+
+            const recordExistst = await prisma.users.findUnique({
+                where: {
+                    Uuid: uuid
+                }
+            });
+
+            if (!recordExistst) {
+                throw new Error(undefined, { cause: 700 });
+            }
+
+            const payload = payloadValidation(req.body, "delete");
 
             const result = await prisma.users.update({
                 where: {
